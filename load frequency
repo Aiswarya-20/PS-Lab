@@ -1,0 +1,17 @@
+clc;
+clearvars;
+f=input('Enter the value of frequency:');
+delpd=input('Enter the value of load demand in per unit:');
+B=input('Enter Damping coefficient in per unit:');
+R=input('Enter the value of Regulation in Hz:');
+H=input('Enter the value of Inertia Time constant:');
+beta=B+(1/R);
+delfstat=(-delpd)/beta;
+Kp=1/B;
+Tp=(2*H)/(B*f)
+disp('The static gain of the power system in Hz/pu MW'); 
+Kp
+disp('The Time constant of the power system in seconds');
+Tp
+disp('Steady state frequency deviation in Hz');
+delfstat
