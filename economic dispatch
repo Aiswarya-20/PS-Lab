@@ -1,0 +1,68 @@
+clear all, clc;
+h=input('Enter kinetic Energy');
+dpower= input('Enter delivered power');
+base=input('Enter base power');
+E=input('Enter E value');
+V=input('Enter V value');
+X=input('Enter Gen Reactance, linel reactance');
+Xmid=X(2)/2;
+pm=input('Enter mechanical input');
+tinitial=0.0;
+M=h/(180*50);
+%UNDER PREFAULT CONDITION
+preX=X(1)+X(2)/2;
+pmaxbf=(E*V)/preX;
+%UNDER FAULT CONDITION
+faultX=(X(1)*Xmid+X(2)*Xmid+X(1)*X(2))/Xmid;
+pmaxdf=(E*V)/faultX;
+%POST FAULT CONDITION
+postX=X(1)+X(2);
+pmaxaf=(E*V)/postX,
+n=3;
+
+disp(['Prefault maximum power limit', num2str(pmaxbf)]); 
+disp(['Maximum power limit during fault', num2str(pmaxdf)]), 
+disp(['Postfault maximum power limit', num2str(pmaxaf)]),
+fork=1:n
+  time =input('Enter step time: Criticaltime: Finaltime:in matrix form :');
+  delta=asin((dpower/base)/(pmaxbf)); 
+  ang(1)=(delta*180)/pi; tinitial=0.0;
+  delchange=0.0; 
+  tim(1)=0;
+  i=2; t=0; j=0;
+  while t<time(3) if(t==tinitial)
+  paminus=pm-pmaxbf*sin(delta); paplus=pm-pmaxdf*sin(delta);
+  paavg=(paplus+paminus)/2;
+  pa=paavg;
+end
+
+if(t==time(2))
+
+paminus=pm-pmaxdf*sin(delta); 
+paplus=pm-pmaxaf*sin(delta),
+
+paavg=(paminus+paplus)/2;
+
+pa=paavg;
+
+end
+
+if(t>tinitial & t<time(2))
+  pa=pm-pmaxdf*sin(delta); end
+  if(t>time(2))
+  pa=pm-pmaxaf*sin(delta); end
+  delchange=delchange+((time(1)*time(1)*pa)/M);
+  delta=(delta*180/pi+delchange)*pi/180;
+  deldeg=delta*180/pi;
+  if(j==0)
+  disp('time acclerating power delchangedeldegree'); end
+  j=j+1;
+  disp([num2str(1),'',num2str(pa),'',num2str(delchange),'',num2str(deldeg)]);
+  t=t+time(1);
+  tim(i)=t;ang(i)=deldeg; i=i+1;
+  end 
+  hold on
+  axis([0 0.6 0 160])
+  xlabel ('Time in sec')
+  ylabel('Torque angle,deg')
+  plot(tim,ang,'-') 
