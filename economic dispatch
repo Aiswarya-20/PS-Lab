@@ -1,0 +1,35 @@
+clc;
+clear all;
+
+n = input('Enter the number of units: ');
+a = zeros(1, n);
+b = zeros(1, n);
+c = zeros(1, n);
+
+for i = 1:n
+    fprintf('Enter the unit %g Data \n', i);
+    a(i) = input('Enter the value of a: ');
+    b(i) = input('Enter the value of b: ');
+    c(i) = input('Enter the value of c: ');
+end
+
+pd = input('Enter the value of load demand: ');
+
+P = zeros(1, n);
+sum_b_a = 0;
+sum_inv_2a = 0;
+
+for i = 1:n
+    sum_b_a = sum_b_a + (b(i) / (2 * a(i)));
+    sum_inv_2a = sum_inv_2a + (1 / (2 * a(i)));
+end
+
+num = pd + sum_b_a;
+lambda = num / sum_inv_2a;
+
+for i = 1:n
+    P(i) = (lambda - b(i)) / (2 * a(i));
+    fprintf('Optimal Generation of unit %g: %g MW\n', i, P(i)); 
+end
+
+
