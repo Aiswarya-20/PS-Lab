@@ -1,0 +1,27 @@
+clc;
+clearvars;
+f=input('Enter the value of frequency:');
+ac=input('Enter the value of area capacity in MW:');
+ol=input('Enter the value of operating load in MW:');
+l=input('Enter load increase in MW');
+b=input('Enter Damping coefficient in percentage:');
+r=input('Enter the value of Regulation in percentage:');
+H=input('Enter the value of Inertia Time constant:');
+delpd2=0;
+delpd1=l/ac;
+R=(r/100)*f;
+b1=ol/f;
+B=b1/ac;
+beta=B+(1/R);
+delfstat=-((delpd2+delpd1)/(2*beta));
+delPtie1_stat=(delpd2-delpd1)/2;
+Kp=1/B;
+Tp=(2*H)/(B*f)
+disp('The static gain of the power system in Hz/pu MW'); 
+Kp
+disp('The Time constant of the power system in seconds');
+Tp
+disp('Steady state frequency deviation in Hz');
+delfstat
+disp('Static tie line power of area1 in perunit MW');
+delPtie1_stat
